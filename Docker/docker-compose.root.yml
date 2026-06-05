@@ -1,0 +1,101 @@
+version: "3.9"
+
+# ─── Networks ─────────────────────────────────────────────────────────────────
+networks:
+  jservices:
+    driver: bridge
+
+# ─── Volumes ──────────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+  redis_data:
+
+# ─── Services ─────────────────────────────────────────────────────────────────
+services:
+
+  # ── PostgreSQL ───────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: jservices-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       ${DB_NAME:-jservices}
+      POSTGRES_USER:     ${DB_USER:-jservices_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      PGDATA:            /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - jservices
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-jservices_user} -d ${DB_NAME:-jservices}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ── Backend Go ───────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jservices-backend
+    restart: unless-stopped
+    environment:
+      ENV:          ${ENV:-development}
+      PORT:         8080
+      DATABASE_URL: postgres://${DB_USER:-jservices_user}:${DB_PASSWORD:-changeme}@postgres:5432/${DB_NAME:-jservices}?sslmode=disable
+      JWT_SECRET:   ${JWT_SECRET}
+      JWT_EXPIRY:   ${JWT_EXPIRY:-24h}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      WHATSAPP_NUMBER: ${WHATSAPP_NUMBER:-22672157058}
+      GOOGLE_CLIENT_ID:     ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - jservices
+    volumes:
+      - ./backend/migrations:/app/migrations:ro
+
+  # ── Frontend Next.js ─────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL:   ${NEXT_PUBLIC_API_URL:-http://localhost:8080}
+        NEXT_PUBLIC_WA_NUMBER: ${WHATSAPP_NUMBER:-22672157058}
+        NEXT_PUBLIC_SITE_URL:  ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    container_name: jservices-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - jservices
+
+  # ── Nginx reverse proxy ──────────────────────────────────────────────────────
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: jservices-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - jservices
+    profiles:
+      - prod
