@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── CSS Variables ─────────────────────────────────────────────────────────── */
+:root {
+  --gold:       #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-dark:  #9A7535;
+  --dark:       #0A0A0B;
+  --dark-2:     #111114;
+  --dark-3:     #13131A;
+  --dark-4:     #1A1A24;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--dark-2);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--dark-3);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(201, 168, 76, 0.3);
+  color: #fff;
+}
+
+/* ─── Utilities ──────────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  }
+
+  .border-gold {
+    border-color: rgba(201, 168, 76, 0.3);
+  }
+
+  .card-dark {
+    background: var(--dark-3);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 16px;
+  }
+
+  .glass {
+    background: rgba(19, 19, 26, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(201, 168, 76, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 168, 76, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+}
+
+/* ─── Components ─────────────────────────────────────────────────────────────── */
+@layer components {
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold text-sm;
+    @apply transition-all duration-200 cursor-pointer;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    color: var(--dark);
+    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.3);
+  }
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(201, 168, 76, 0.45);
+  }
+  .btn-gold:active {
+    transform: translateY(0);
+  }
+
+  .btn-gold-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold text-sm;
+    @apply transition-all duration-200 cursor-pointer;
+    background: transparent;
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+  }
+  .btn-gold-outline:hover {
+    background: rgba(201, 168, 76, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .input-dark {
+    @apply w-full px-4 py-3 rounded-lg text-sm text-white outline-none transition-all;
+    background: var(--dark);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+  }
+  .input-dark:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+  }
+  .input-dark::placeholder {
+    color: #4B5563;
+  }
+}
