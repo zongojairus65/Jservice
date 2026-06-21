@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strings"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/rs/zerolog/log"
@@ -79,16 +78,18 @@ func Migrate(db *pgxpool.Pool) error {
 			return fmt.Errorf("read %s: %w", f, err)
 		}
 
-		// Split by semicolon and execute each statement
-		stmts := strings.Split(string(content), ";")
-		for _, stmt := range stmts {
-			stmt = strings.TrimSpace(stmt)
-			if stmt == "" {
-				continue
-			}
-			if _, err := db.Exec(context.Background(), stmt); err != nil {
-				return fmt.Errorf("execute %s: %w", name, err)
-			}
+		// Execute the whole file in one call via the simple query protocol.
+		// This correctly handles multi-statement files, including PL/pgSQL
+		// function bodies wrapped in $$ ... $$ that contain their own semicolons
+		// (naive splitting on ";" would break those apart).
+		conn, err := db.Acquire(context.Background())
+		if err != nil {
+			return fmt.Errorf("acquire connection for %s: %w", name, err)
+		}
+		_, err = conn.Conn().PgConn().Exec(context.Background(), string(content)).ReadAll()
+		conn.Release()
+		if err != nil {
+			return fmt.Errorf("execute %s: %w", name, err)
 		}
 
 		// Mark as applied
