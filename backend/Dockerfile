@@ -6,12 +6,11 @@ WORKDIR /app
 # Install dependencies
 RUN apk add --no-cache git ca-certificates tzdata
 
-# Download modules
-COPY go.mod go.sum ./
-RUN go mod download
+# Copy source (go.sum is generated below — it isn't committed to the repo)
+COPY . .
+RUN go mod tidy
 
 # Build
-COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build -ldflags="-w -s" -o server ./cmd/server
 
