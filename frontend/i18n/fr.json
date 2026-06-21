@@ -1,0 +1,163 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "products": "Produits",
+    "services": "Services",
+    "pricing": "Tarifs",
+    "contact": "Contact",
+    "dashboard": "Tableau de bord",
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "logout": "Déconnexion",
+    "admin": "Administration"
+  },
+  "hero": {
+    "badge": "Plateforme SaaS — Afrique de l'Ouest",
+    "title": "Vos services digitaux",
+    "title_gold": "en un clic",
+    "subtitle": "Bots sportifs, cartes virtuelles, restauration d'images — tout ce dont vous avez besoin, livré rapidement via WhatsApp ou en ligne.",
+    "cta_primary": "Explorer les services",
+    "cta_secondary": "Parler à un expert",
+    "stat_clients": "Clients satisfaits",
+    "stat_services": "Services disponibles",
+    "stat_satisfaction": "Taux de satisfaction"
+  },
+  "products": {
+    "title": "Produits Digitaux",
+    "subtitle": "Téléchargez instantanément après paiement",
+    "badge": "Produits",
+    "see_all": "Voir tous les produits",
+    "add_cart": "Ajouter au panier",
+    "download": "Télécharger",
+    "empty": "Aucun produit disponible pour le moment."
+  },
+  "services": {
+    "title": "Nos Services",
+    "subtitle": "Solutions professionnelles sur mesure",
+    "badge": "Services",
+    "see_all": "Voir tous les services",
+    "order_whatsapp": "Commander via WhatsApp",
+    "on_quote": "Sur devis",
+    "empty": "Aucun service disponible pour le moment."
+  },
+  "cart": {
+    "title": "Votre Panier",
+    "empty": "Votre panier est vide",
+    "empty_sub": "Parcourez nos produits et services pour commencer.",
+    "total": "Total",
+    "checkout": "Passer commande",
+    "remove": "Retirer",
+    "continue": "Continuer mes achats",
+    "order_via_whatsapp": "Commander via WhatsApp"
+  },
+  "order": {
+    "title": "Finaliser la commande",
+    "step_info": "Vos informations",
+    "step_payment": "Paiement",
+    "step_confirm": "Confirmation",
+    "name": "Votre nom complet",
+    "phone": "Numéro WhatsApp",
+    "notes": "Notes (optionnel)",
+    "payment_method": "Méthode de paiement",
+    "mobile_money": "Mobile Money",
+    "manual": "Virement / Dépôt manuel",
+    "provider": "Opérateur",
+    "provider_ref": "Référence de transaction",
+    "submit": "Confirmer la commande",
+    "success_title": "Commande envoyée !",
+    "success_msg": "Nous avons bien reçu votre commande. Notre équipe vous contactera sous peu.",
+    "whatsapp_confirm": "Confirmer sur WhatsApp",
+    "note_dynamic": "Les prix sont configurés par notre équipe. Pour un devis personnalisé, contactez-nous."
+  },
+  "auth": {
+    "login_title": "Connexion",
+    "register_title": "Créer un compte",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "name": "Nom complet",
+    "phone": "Téléphone",
+    "login_btn": "Se connecter",
+    "register_btn": "Créer mon compte",
+    "no_account": "Pas encore de compte ?",
+    "has_account": "Déjà un compte ?",
+    "or_google": "Ou continuer avec Google",
+    "guest": "Continuer sans compte",
+    "forgot_password": "Mot de passe oublié ?"
+  },
+  "dashboard": {
+    "title": "Mon espace",
+    "orders": "Mes commandes",
+    "profile": "Mon profil",
+    "no_orders": "Vous n'avez pas encore de commande.",
+    "order_ref": "Référence",
+    "order_date": "Date",
+    "order_total": "Total",
+    "order_status": "Statut"
+  },
+  "admin": {
+    "title": "Administration JServices",
+    "stats": "Statistiques",
+    "orders": "Commandes",
+    "products": "Produits",
+    "services": "Services",
+    "users": "Utilisateurs",
+    "payments": "Paiements",
+    "revenue_total": "Revenus totaux",
+    "revenue_month": "Revenus ce mois",
+    "orders_total": "Total commandes",
+    "orders_pending": "En attente",
+    "users_total": "Clients inscrits",
+    "validate": "Valider",
+    "reject": "Rejeter",
+    "add_product": "Ajouter un produit",
+    "add_service": "Ajouter un service",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "chat": {
+    "title": "Support JServices",
+    "online": "En ligne",
+    "placeholder": "Écrivez votre message...",
+    "send": "Envoyer",
+    "wa_fallback": "Continuer sur WhatsApp",
+    "greeting": "Bonjour ! Je suis l'assistant JServices. Comment puis-je vous aider ?"
+  },
+  "badges": {
+    "popular": "Populaire",
+    "new": "Nouveau",
+    "quote": "Sur devis"
+  },
+  "status": {
+    "pending": "En attente",
+    "payment_submitted": "Paiement soumis",
+    "paid": "Payé",
+    "processing": "En traitement",
+    "delivered": "Livré",
+    "cancelled": "Annulé"
+  },
+  "cta": {
+    "title": "Prêt à démarrer ?",
+    "subtitle": "Contactez-nous sur WhatsApp pour démarrer en quelques minutes. Réponse garantie sous 30 minutes.",
+    "btn": "Démarrer sur WhatsApp"
+  },
+  "footer": {
+    "tagline": "Vos services digitaux en un clic",
+    "rights": "© 2024 JServices. Tous droits réservés.",
+    "nav": "Navigation",
+    "contact": "Contact",
+    "follow": "Nous suivre",
+    "location": "Burkina Faso, Afrique de l'Ouest"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "confirm": "Confirmer",
+    "or": "ou"
+  }
+}
