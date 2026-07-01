@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
-  // "standalone" est pour Docker uniquement — pas Cloudflare Pages
+  // Resolve @/ alias via webpack — works without tsconfig paths
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve(__dirname),
+    };
+    return config;
+  },
+
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**.googleusercontent.com" },
