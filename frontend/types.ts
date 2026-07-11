@@ -63,6 +63,25 @@ export interface AdminOrder {
   created_at: string;
 }
 
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  role: "user" | "admin";
+  created_at: string;
+}
+
+export interface AdminPayment {
+  id: string;
+  order_ref: string;
+  method: string;
+  provider?: string | null;
+  provider_ref?: string | null;
+  amount: number;
+  status: string;
+}
+
 export interface AdminStats {
   revenue: { total: number; month: number };
   orders: { total: number; pending: number; paid: number; delivered: number };
