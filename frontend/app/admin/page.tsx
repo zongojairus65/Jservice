@@ -359,4 +359,61 @@ export default function AdminPage() {
                   ) : payments.map((p) => (
                     <div key={p.id} className="card-dark p-4 flex items-center gap-4 flex-wrap">
                       <div className="font-mono text-xs text-gray-500">{p.order_ref}</div>
-                      <div className="fle
+                      <div className="flex-1">
+                        <div className="text-white text-sm font-semibold">{p.method} {p.provider ? `· ${p.provider}` : ""}</div>
+                        {p.provider_ref && <div className="text-gray-600 text-xs font-mono">{p.provider_ref}</div>}
+                      </div>
+                      <div className="font-serif font-black text-gold">{formatPrice(p.amount, locale)}</div>
+                      <StatusBadge status={p.status === "validated" ? "paid" : "pending"} locale={locale} />
+                      {p.status === "pending" && (
+                        <button onClick={() => validatePayment(p.id)}
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold"
+                          style={{ background: "rgba(16,185,129,0.15)", color: "#10B981", border: "1px solid rgba(16,185,129,0.3)" }}>
+                          <CheckCircle size={13}/> {t.admin.validate}
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* ── Users ─────────────────────────────────────────────────── */}
+            {tab === "users" && (
+              <motion.div key="users" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <div className="flex flex-col gap-3">
+                  {users.map((u) => (
+                    <div key={u.id} className="card-dark p-4 flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center font-serif font-black text-dark flex-shrink-0" style={{ background: "linear-gradient(135deg,#9A7535,#C9A84C)" }}>
+                        {u.name?.[0] ?? "?"}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-white text-sm font-semibold truncate">{u.name}</div>
+                        <div className="text-gray-500 text-xs truncate">{u.email} {u.phone ? `· ${u.phone}` : ""}</div>
+                      </div>
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-black"
+                        style={{ background: u.role === "admin" ? "rgba(201,168,76,0.15)" : "rgba(99,102,241,0.15)", color: u.role === "admin" ? "#C9A84C" : "#818CF8", border: `1px solid ${u.role === "admin" ? "rgba(201,168,76,0.3)" : "rgba(99,102,241,0.3)"}` }}>
+                        {u.role}
+                      </span>
+                      <div className="text-gray-600 text-xs">{formatDate(u.created_at, locale)}</div>
+                      {u.role !== "admin" && (
+                        <button onClick={async () => {
+                          await adminApi.updateUserRole(u.id, "admin");
+                          setUsers((prev) => prev.map((x) => x.id === u.id ? { ...x, role: "admin" } : x));
+                          toast.success(locale === "fr" ? "Rôle mis à jour" : "Role updated");
+                        }}
+                          className="text-xs text-gold hover:underline whitespace-nowrap">
+                          → Admin
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
+      </div>
+    </div>
+  );
+}
